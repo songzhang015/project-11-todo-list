@@ -1,5 +1,11 @@
 /* CSS File for Todo List Project */
 
+:root {
+  --header-bg: #353535;
+  --sidebar-bg: #d1d1d1;
+  --content-bg: #f0f0f0;
+}
+
 html, body {
     height: 100%;
 }
@@ -8,4 +14,29 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 6rem auto;
+}
+
+.header-container {
+    background-color: var(--header-bg);
+    grid-column: span 2;
+    padding-left: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.header-text {
+    color: white;
+}
+
+.sidebar-container {
+    background-color: var(--sidebar-bg);
+    grid-row: span 2;
+}
+
+.content-container {
+    background-color: var(--content-bg);
+    grid-row: span 2;
 }
