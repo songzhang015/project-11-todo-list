@@ -1,0 +1,11 @@
+/* CSS File for Todo List Project */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
