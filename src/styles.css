@@ -34,9 +34,72 @@ body {
 .sidebar-container {
     background-color: var(--sidebar-bg);
     grid-row: span 2;
+    padding: 0 2rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-title {
+
+}
+
+.sidebar-button, .add-project-button {
+    font-size: 1rem;
+    background-color: var(--sidebar-bg);
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.sidebar-button.active {
+    font-weight: bold;
+}
+
+button {
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: filter 0.1s;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+input {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+
+
+button:hover {
+    filter: brightness(90%);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-buttons button {
+    flex: 1;
+    text-align: center;
 }
 
 .content-container {
     background-color: var(--content-bg);
     grid-row: span 2;
+    padding: 2rem 20vw 2rem 20vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-title {
+
+}
+
+.content-button {
+
 }
