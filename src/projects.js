@@ -2,6 +2,7 @@
 
 import { shiftFocus } from "./render"
 import { generalSidebarFunctionality } from "./tasks"
+import { getProjects, saveProjects, removeProjectTasks } from "./storage"
 
 const sidebarContainer = document.querySelector(".sidebar-container")
 
@@ -53,9 +54,9 @@ function addProjectFunctionality() {
             } else if (projectExists(projectName)) {
                 alert("Project names must be different.");
             } else {
-                const savedProjects = JSON.parse(localStorage.getItem("projects")) || [];
+                const savedProjects = getProjects();
                 savedProjects.push(projectName);
-                localStorage.setItem('projects', JSON.stringify(savedProjects));
+                saveProjects(savedProjects);
                 newProject(projectName);
                 newProjectForm.remove();
             }
@@ -87,10 +88,10 @@ function newProject(projectName) {
         e.stopPropagation();
         projectButtonContainer.remove();
 
-        const savedProjects = JSON.parse(localStorage.getItem("projects")) || [];
+        const savedProjects = getProjects();
         const filteredProjects = savedProjects.filter(project => project !== projectName);
-        localStorage.setItem("projects", JSON.stringify(filteredProjects));
-        localStorage.removeItem(projectName);
+        saveProjects(filteredProjects);
+        removeProjectTasks(projectName);
         const contentContainer = document.querySelector(".content-container");
         contentContainer.innerHTML = "";
     });
@@ -113,7 +114,7 @@ function projectExists(projectName) {
 
 // Load projects from local storage when the page loads
 document.addEventListener("DOMContentLoaded", () => {
-    const savedProjects = JSON.parse(localStorage.getItem('projects')) || [];
+    const savedProjects = getProjects();
     savedProjects.forEach(projectName => newProject(projectName));
     addProjectFunctionality();
 });

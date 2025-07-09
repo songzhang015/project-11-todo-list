@@ -1,4 +1,5 @@
 /* Handles the logic of tasks on the right hand side */
+import { getTasks, saveTasks } from "./storage"
 const contentContainer = document.querySelector(".content-container");
 
 function generalSidebarFunctionality() {
@@ -19,7 +20,7 @@ function generalSidebarFunctionality() {
 
             // Retrieves data associated with section name and parse into an object or []
             // For each task, call the addNewTask function to add it again
-            const savedTasks = JSON.parse(localStorage.getItem(sectionName)) || [];
+            const savedTasks = getTasks(sectionName);
             savedTasks.forEach(task => addNewTask(task, sectionName));
 
             // Add task button on the rightside
@@ -65,9 +66,9 @@ function generalSidebarFunctionality() {
                     if (!taskName) {
                         alert("Task name cannot be empty.");
                     } else {
-                        const tasks = JSON.parse(localStorage.getItem(sectionName)) || [];
+                        const tasks = getTasks(sectionName);
                         tasks.push({ name: taskName, completed: false });
-                        localStorage.setItem(sectionName, JSON.stringify(tasks));
+                        saveTasks(sectionName, tasks);
 
                         addNewTask({ name: taskName, completed: false }, sectionName);
                         newTaskForm.remove();
@@ -98,14 +99,14 @@ function addNewTask(taskData, sectionName) {
     checkbox.checked = taskData.completed;
 
     checkbox.addEventListener("change", () => {
-        const tasks = JSON.parse(localStorage.getItem(sectionName)) || [];
+        const tasks = getTasks(sectionName);
         const updatedTasks = tasks.map(task => {
             if (task.name === taskData.name) {
                 return { name: taskData.name, completed: checkbox.checked };
             }
             return task;
         });
-        localStorage.setItem(sectionName, JSON.stringify(updatedTasks));
+        saveTasks(sectionName, updatedTasks);
     });
 
     const deleteBtn = document.createElement("button");
@@ -117,9 +118,9 @@ function addNewTask(taskData, sectionName) {
 
     deleteBtn.addEventListener("click", () => {
         taskContainer.remove();
-        const tasks = JSON.parse(localStorage.getItem(sectionName)) || [];
+        const tasks = getTasks(sectionName);
         const filteredTasks = tasks.filter(task => task.name !== taskData.name);
-        localStorage.setItem(sectionName, JSON.stringify(filteredTasks));
+        saveTasks(sectionName, filteredTasks);
     });
 
     contentContainer.insertBefore(taskContainer, newTaskButton);
