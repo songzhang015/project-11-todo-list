@@ -1,9 +1,11 @@
 /* CSS File for Todo List Project */
 
 :root {
-  --header-bg: #353535;
-  --sidebar-bg: #d1d1d1;
-  --content-bg: #f0f0f0;
+    --header-bg: #353535;
+    --sidebar-bg: #d1d1d1;
+    --content-bg: #f0f0f0;
+    --button-green: #4CAF50;
+    --button-red: #FF4444;
 }
 
 html, body {
@@ -39,10 +41,6 @@ body {
     flex-direction: column;
 }
 
-.sidebar-title {
-
-}
-
 .sidebar-button, .add-project-button {
     font-size: 1rem;
     background-color: var(--sidebar-bg);
@@ -61,16 +59,14 @@ button {
     padding: 0.5rem 1rem 0.5rem 1rem;
 }
 
+button:hover {
+    filter: brightness(90%);
+}
+
 input {
     padding: 0.5rem 0.75rem;
     font-size: 1rem;
-    margin-bottom: 0.5rem;
-}
-
-
-
-button:hover {
-    filter: brightness(90%);
+    margin: 0.5rem 0 0.5rem 0;
 }
 
 form {
@@ -81,11 +77,55 @@ form {
 .form-buttons {
     display: flex;
     gap: 1rem;
+    max-width: 30vw;
+    box-sizing: border-box;
 }
 
 .form-buttons button {
     flex: 1;
     text-align: center;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 30vw;
+    padding: 0.25rem;
+    font-size: 1.25rem;
+    box-sizing: border-box;
+    transition: background-color 0.1s;
+}
+
+.task-item:hover {
+    background-color: rgb(210, 210, 210);
+}
+
+.left-task-container input[type="checkbox"] {
+    transform: scale(1.25);
+    margin-right: 0.5rem;
+}
+
+.delete-btn {
+    background-color: transparent;
+    margin-top: -3px;
+    padding: 1px 2px 1px 2px;
+    user-select: none;
+    font-size: 1.1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s;
+}
+
+.task-item:hover .delete-btn,
+.task-item:focus-within .delete-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.task-input {
+    max-width: 30vw;
+    box-sizing: border-box;
 }
 
 .content-container {
@@ -96,10 +136,23 @@ form {
     flex-direction: column;
 }
 
-.content-title {
-
+.content-button {
+    max-width: 30vw;
+    box-sizing: border-box;
+    margin-top: 0.5rem;
 }
 
-.content-button {
+.content-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
 
+.create-button {
+    background-color: var(--button-green);
+    border-radius: 4px;
+}
+
+.cancel-button {
+    background-color: var(--button-red);
+    border-radius: 4px;
 }

@@ -29,12 +29,14 @@ function addProjectFunctionality() {
 
         // Create Button
         const createProjectButton = document.createElement("button");
+        createProjectButton.classList.add("create-button");
         createProjectButton.textContent = "Create";
         createProjectButton.type = "submit";
         buttonsContainer.appendChild(createProjectButton);
 
         // Cancel Button
         const cancelProjectButton = document.createElement("button");
+        cancelProjectButton.classList.add("cancel-button");
         cancelProjectButton.textContent = "Cancel";
         cancelProjectButton.type = "button";
         buttonsContainer.appendChild(cancelProjectButton);
@@ -51,6 +53,9 @@ function addProjectFunctionality() {
             } else if (projectExists(projectName)) {
                 alert("Project names must be different.");
             } else {
+                const savedProjects = JSON.parse(localStorage.getItem("projects")) || [];
+                savedProjects.push(projectName);
+                localStorage.setItem('projects', JSON.stringify(savedProjects));
                 newProject(projectName);
                 newProjectForm.remove();
             }
@@ -82,5 +87,12 @@ function projectExists(projectName) {
     }
     return false;
 }
+
+// Load projects from local storage when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+    const savedProjects = JSON.parse(localStorage.getItem('projects')) || [];
+    savedProjects.forEach(projectName => newProject(projectName));
+    addProjectFunctionality();
+});
 
 export { addProjectFunctionality }

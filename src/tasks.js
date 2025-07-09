@@ -37,6 +37,7 @@ function generalSidebarFunctionality() {
                 contentContainer.appendChild(newTaskForm);
 
                 const newTaskInput = document.createElement("input");
+                newTaskInput.classList.add("task-input");
                 newTaskInput.placeholder = "Task";
                 newTaskForm.appendChild(newTaskInput);
                 newTaskInput.focus();
@@ -46,11 +47,13 @@ function generalSidebarFunctionality() {
                 newTaskForm.appendChild(buttonsContainer);
 
                 const createButton = document.createElement("button");
+                createButton.classList.add("create-button");
                 createButton.textContent = "Create";
                 createButton.type = "submit";
                 buttonsContainer.appendChild(createButton);
 
                 const cancelButton = document.createElement("button");
+                cancelButton.classList.add("cancel-button");
                 cancelButton.textContent = "Cancel";
                 cancelButton.type = "button";
                 buttonsContainer.appendChild(cancelButton);
@@ -80,18 +83,25 @@ function generalSidebarFunctionality() {
 }
 
 function addNewTask(taskName, sectionName) {
+    // Create a task container, move everything on the left-side to the left container
+    // Add the left-side container and delete button to the task container
     const newTaskButton = document.querySelector(".content-button");
 
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-item");
 
+    const leftContainer = document.createElement("div");
+    leftContainer.classList.add("left-task-container");
+
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "x";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.textContent = "✖";
 
-    taskContainer.append(checkbox, " ", taskName, deleteBtn);
+    leftContainer.append(checkbox, " ", taskName);
+    taskContainer.append(leftContainer, deleteBtn);
 
     deleteBtn.addEventListener("click", () => {
         taskContainer.remove();
@@ -101,8 +111,6 @@ function addNewTask(taskName, sectionName) {
     });
 
     contentContainer.insertBefore(taskContainer, newTaskButton);
-
-    
 }
 
 export { generalSidebarFunctionality }
