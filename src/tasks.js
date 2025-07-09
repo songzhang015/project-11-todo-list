@@ -7,14 +7,14 @@ function generalSidebarFunctionality() {
     sidebarButtons.forEach(button => {
         // Sidebar event listener
         button.addEventListener("click", () => {
-            const sectionName = button.textContent;
+            const sectionName = button.textContent.replace("✖", "");
             while (contentContainer.firstChild) {
                 contentContainer.removeChild(contentContainer.firstChild);
             }
 
             const contentTitle = document.createElement("h2");
             contentTitle.classList.add("content-title");
-            contentTitle.textContent = button.textContent;
+            contentTitle.textContent = button.textContent.replace("✖", "");
             contentContainer.appendChild(contentTitle);
 
             // Retrieves data associated with section name and parse into an object or []
@@ -66,10 +66,10 @@ function generalSidebarFunctionality() {
                         alert("Task name cannot be empty.");
                     } else {
                         const tasks = JSON.parse(localStorage.getItem(sectionName)) || [];
-                        tasks.push(taskName);
+                        tasks.push({ name: taskName, completed: false });
                         localStorage.setItem(sectionName, JSON.stringify(tasks));
 
-                        addNewTask(taskName, sectionName);
+                        addNewTask({ name: taskName, completed: false }, sectionName);
                         newTaskForm.remove();
                     }
                 });
@@ -82,7 +82,7 @@ function generalSidebarFunctionality() {
     });
 }
 
-function addNewTask(taskName, sectionName) {
+function addNewTask(taskData, sectionName) {
     // Create a task container, move everything on the left-side to the left container
     // Add the left-side container and delete button to the task container
     const newTaskButton = document.querySelector(".content-button");
@@ -95,18 +95,30 @@ function addNewTask(taskName, sectionName) {
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
+    checkbox.checked = taskData.completed;
+
+    checkbox.addEventListener("change", () => {
+        const tasks = JSON.parse(localStorage.getItem(sectionName)) || [];
+        const updatedTasks = tasks.map(task => {
+            if (task.name === taskData.name) {
+                return { name: taskData.name, completed: checkbox.checked };
+            }
+            return task;
+        });
+        localStorage.setItem(sectionName, JSON.stringify(updatedTasks));
+    });
 
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete-btn");
     deleteBtn.textContent = "✖";
 
-    leftContainer.append(checkbox, " ", taskName);
+    leftContainer.append(checkbox, " ", taskData.name);
     taskContainer.append(leftContainer, deleteBtn);
 
     deleteBtn.addEventListener("click", () => {
         taskContainer.remove();
         const tasks = JSON.parse(localStorage.getItem(sectionName)) || [];
-        const filteredTasks = tasks.filter(task => task !== taskName);
+        const filteredTasks = tasks.filter(task => task.name !== taskData.name);
         localStorage.setItem(sectionName, JSON.stringify(filteredTasks));
     });
 

@@ -72,7 +72,30 @@ function newProject(projectName) {
     const newProject = document.createElement("button");
     newProject.classList.add("sidebar-button");
     newProject.textContent = projectName;
-    sidebarContainer.insertBefore(newProject, newProjectButton);
+
+    const projectButtonContainer = document.createElement("div");
+    projectButtonContainer.classList.add("project-item");
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.textContent = "✖";
+
+    newProject.append(deleteBtn);
+    projectButtonContainer.append(newProject);
+
+    deleteBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        projectButtonContainer.remove();
+
+        const savedProjects = JSON.parse(localStorage.getItem("projects")) || [];
+        const filteredProjects = savedProjects.filter(project => project !== projectName);
+        localStorage.setItem("projects", JSON.stringify(filteredProjects));
+        localStorage.removeItem(projectName);
+        const contentContainer = document.querySelector(".content-container");
+        contentContainer.innerHTML = "";
+    });
+
+    sidebarContainer.insertBefore(projectButtonContainer, newProjectButton);
     shiftFocus();
     generalSidebarFunctionality();
 }

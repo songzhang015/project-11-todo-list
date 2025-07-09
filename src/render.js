@@ -41,11 +41,6 @@ function initializeSidebar() {
     projectsTitle.textContent = "Projects";
     sidebarContainer.appendChild(projectsTitle);
 
-    const testProjectButton = document.createElement("button");
-    testProjectButton.classList.add("sidebar-button");
-    testProjectButton.textContent = "Project 1";
-    sidebarContainer.appendChild(testProjectButton);
-
     // Shift focus when button clicked
     shiftFocus();
 

@@ -45,6 +45,10 @@ body {
     font-size: 1rem;
     background-color: var(--sidebar-bg);
     padding: 0.5rem 1rem 0.5rem 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sidebar-button.active {
@@ -118,7 +122,8 @@ form {
 }
 
 .task-item:hover .delete-btn,
-.task-item:focus-within .delete-btn {
+.task-item:focus-within .delete-btn, 
+.project-item:hover .delete-btn {
     opacity: 1;
     pointer-events: auto;
 }
